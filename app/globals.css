@@ -1,0 +1,16 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.neon-text-blue {
+  color: #fff;
+  text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #0011ffad, 0 0 5px #0011ffad,
+    0 0 7px #0011ffad, 0 0 10px #0011ffad, 0 0 15px #0011ffad;
+  font-family: Comic Sans MS;
+}
+
+.neon-border-blue {
+  border: 4px solid #0011ffad;
+  box-shadow: 0 0 1px #fff, 0 0 2px #ffffffeb, 0 0 3px #0011ffa2,
+    0 0 5px #0011ffcf, 0 0 7px #0011ffc9, 0 0 10px #0011ffde, 0 0 15px #0011ff;
+}
