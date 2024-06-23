@@ -4,6 +4,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useMosaics } from "./Mosaic";
 import Chart from "./ViewChart";
+import { motion } from "framer-motion";
 
 const Price = () => {
   const [priceData, setPriceData] = useState<any>();
@@ -53,17 +54,22 @@ const Price = () => {
           </div>
           <div className="flex">
             <ul className="neon-border-blue p-4 m-5">
-              {List.map((item) => (
-                <li
+              {List.map((item, index) => (
+                <motion.li
                   key={item.title}
-                  className="border-b-2 border-white text-3xl w-auto p-2"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.5 }} // インデックスに応じて遅延時間を設定
                 >
-                  {item.title} : {item.value}
-                </li>
+                  <li className="border-b-2 border-white text-3xl w-auto p-2">
+                    {item.title} : {item.value}
+                  </li>
+                </motion.li>
               ))}
             </ul>
-            <div>ここにchartを表示するロジックを作成予定です。</div>
-            <Chart />
+            <div className="neon-border-blue w-1/3 p-4 m-5">
+              <Chart />
+            </div>
           </div>
 
           <button

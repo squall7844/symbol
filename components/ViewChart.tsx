@@ -33,14 +33,14 @@ const ViewChart = () => {
       try {
         const response = await axios.get("/api/GetChart");
         const allData = response.data.data.candlestick[0].ohlcv;
-        const latest7DaysData = allData.slice(-7).map((item: any[]) => ({
+        const weekData = allData.slice(-7).map((item: any[]) => ({
           time: new Date(item[5]),
           open: parseFloat(item[0]),
           high: parseFloat(item[1]),
           low: parseFloat(item[2]),
           close: parseFloat(item[3]),
         }));
-        setChartData(latest7DaysData);
+        setChartData(weekData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -85,20 +85,31 @@ const ViewChart = () => {
 
   const options: ChartOptions<"bar"> = {
     scales: {
+      // X軸の設定
       x: {
+        title: {
+          display: false,
+          text: "日付",
+        },
         type: "time",
         time: {
           unit: "day",
+          displayFormats: {
+            day: "MM/dd",
+          },
+          tooltipFormat: "yyyy-MM-dd",
         },
-        title: {
-          display: true,
-          text: "Date",
-        },
+        min: chartData.length > 0 ? chartData[0].time : undefined,
+        max:
+          chartData.length > 0
+            ? chartData[chartData.length - 1].time
+            : undefined,
       },
+      // Y軸の設定
       y: {
         title: {
-          display: true,
-          text: "Price",
+          display: false,
+          text: "価格",
         },
       },
     },
@@ -106,7 +117,7 @@ const ViewChart = () => {
 
   return (
     <div>
-      <h1>XYM/JPY Daily Candlestick Chart (Last 7 Days)</h1>
+      <h1>XYM/JPY </h1>
       <Bar data={data} options={options} />
     </div>
   );

@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* 文字をネオン風に（青） */
 .neon-text-blue {
   color: #fff;
   text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #0011ffad, 0 0 5px #0011ffad,
@@ -9,6 +10,7 @@
   font-family: Comic Sans MS;
 }
 
+/* 囲いをネオン風に（青） */
 .neon-border-blue {
   border: 4px solid #0011ffad;
   box-shadow: 0 0 1px #fff, 0 0 2px #ffffffeb, 0 0 3px #0011ffa2,

@@ -15,7 +15,6 @@ export const useMosaics = () => {
     accountHttp.getAccountInfo(accountAddress).subscribe(
       (accountInfo) => {
         setMosaics(accountInfo.mosaics);
-        console.log(accountInfo.mosaics);
         // console.log(accountInfo);
       },
       (err) => console.error(err)

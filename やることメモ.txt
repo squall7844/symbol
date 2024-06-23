@@ -1,3 +1,8 @@
 参考さいと
 https://zenn.dev/nemtus/articles/blockchain-symbol-react-1st-symbol-sdk#%E4%BF%9D%E6%9C%89%E3%83%A2%E3%82%B6%E3%82%A4%E3%82%AF%E3%81%A8%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%B3%E3%82%B9%E3%81%AE%E5%8F%96%E5%BE%97
 保有モザイクとインポータンスの取得まで実施
+
+資産残高をアニメ－ションで表示
+ログイン認証 プリズマを使用して
+chart表示 react-chart.js-2
+mosaicのAPIからゲットして表示←これむずい。。。

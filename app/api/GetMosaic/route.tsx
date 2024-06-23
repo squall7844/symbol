@@ -17,9 +17,6 @@ export const GET = async (request: NextRequest) => {
     return NextResponse.json(accountInfo.mosaics);
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "API取得失敗" }, { status: 500 });
   }
 };
