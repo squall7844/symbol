@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Address, RepositoryFactoryHttp, Mosaic } from "symbol-sdk";
+import { Address, RepositoryFactoryHttp } from "symbol-sdk";
 
-//アカウントの情報を取得しモザイクを取得する
+// アカウントの情報を取得しモザイクを取得する
 export const GET = async (request: NextRequest) => {
   try {
-    const address = process.env.NEXT_PUBLIC_ADDRESS || ""; //公開アドレス
+    const address = process.env.NEXT_PUBLIC_ADDRESS || ""; // 公開アドレス
     const accountAddress = Address.createFromRawAddress(address);
     const nodeUrl = process.env.NEXT_PUBLIC_NODE_URL || "";
     const repositoryFactory = new RepositoryFactoryHttp(nodeUrl);
@@ -13,8 +13,14 @@ export const GET = async (request: NextRequest) => {
     const accountInfo = await accountHttp
       .getAccountInfo(accountAddress)
       .toPromise();
-    console.log(accountInfo.mosaics);
-    return NextResponse.json(accountInfo.mosaics);
+
+    // モザイクのamountだけを取得して四捨五入する
+    const amounts = accountInfo.mosaics.map((mosaic) =>
+      Math.round(mosaic.amount.compact() / 1000000)
+    );
+
+    // console.log(accountInfo); アカウント情報ログ出力
+    return NextResponse.json(amounts);
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "API取得失敗" }, { status: 500 });

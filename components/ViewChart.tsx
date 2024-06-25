@@ -99,11 +99,6 @@ const ViewChart = () => {
           },
           tooltipFormat: "yyyy-MM-dd",
         },
-        min: chartData.length > 0 ? chartData[0].time : undefined,
-        max:
-          chartData.length > 0
-            ? chartData[chartData.length - 1].time
-            : undefined,
       },
       // Y軸の設定
       y: {

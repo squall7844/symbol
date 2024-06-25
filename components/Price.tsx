@@ -2,19 +2,23 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
-import { useMosaics } from "./Mosaic";
+
 import Chart from "./ViewChart";
 import { motion } from "framer-motion";
 
 const Price = () => {
   const [priceData, setPriceData] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const mosaics = useMosaics();
+  const [mosaics, setMosaics] = useState("");
 
-  // 仮想通貨の最新価格を取得
   const fetchPriceData = () => {
+    // 仮想通貨(XYM)の最新価格を取得
     axios.get("/api/GetPrice").then((response) => {
       setPriceData(response.data);
+    });
+    // 現在のモザイク数を取得
+    axios.get("/api/GetMosaic").then((response) => {
+      setMosaics(response.data);
     });
   };
   // データをリロード時に取得する
@@ -22,15 +26,9 @@ const Price = () => {
     fetchPriceData();
   }, []);
 
-  // モザイクの合計金額を取得
-  const totalMosaicValue = mosaics.reduce(
-    (acc, mosaic) => acc + parseInt(mosaic.amount.toString()),
-    0
-  );
-
   // 定数を定義
   const Xym: any = priceData && priceData.data ? priceData.data.last : 0; //XYMの金額
-  const My_Xym: number = Math.round(totalMosaicValue / 1000000); // モザイク数を見やすい数字に修正
+  const My_Xym: number = Number(mosaics); // モザイク数を見やすい数字に修正
   const assets: number = Math.round(Xym * My_Xym); //資産金額
   const investment: number = 100000; //投資金額
   const profit: number = Math.round(Xym * My_Xym - investment); //利益
@@ -47,9 +45,9 @@ const Price = () => {
 
   return (
     <div>
-      {priceData ? (
+      {priceData && mosaics ? (
         <div>
-          <div className="neon-border-blue flex text-5xl p-4 m-5">
+          <div className="neon-border-blue flex w-4/5 text-5xl p-4 m-5">
             資産金額 : {assets}円
           </div>
           <div className="flex">
@@ -60,38 +58,43 @@ const Price = () => {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.5 }} // インデックスに応じて遅延時間を設定
+                  className="border-b-2 border-white text-3xl w-auto p-2 m-5"
                 >
-                  <li className="border-b-2 border-white text-3xl w-auto p-2">
-                    {item.title} : {item.value}
-                  </li>
+                  {item.title} : {item.value}
                 </motion.li>
               ))}
+              <button
+                onClick={() => {
+                  setLoading(true);
+                  fetchPriceData();
+                  setTimeout(() => {
+                    setLoading(false);
+                  }, 1000);
+                }}
+              >
+                {loading ? (
+                  <Image
+                    src="/loading.svg"
+                    alt="loading..."
+                    width={64}
+                    height={64}
+                  />
+                ) : (
+                  <Image
+                    src="/reload.svg"
+                    alt="reload..."
+                    className=""
+                    width={64}
+                    height={64}
+                  />
+                )}
+              </button>
             </ul>
-            <div className="neon-border-blue w-1/3 p-4 m-5">
+
+            <div className="neon-border-blue w-1/2 p-4 m-5">
               <Chart />
             </div>
           </div>
-
-          <button
-            onClick={() => {
-              setLoading(true);
-              fetchPriceData();
-              setTimeout(() => {
-                setLoading(false);
-              }, 1000);
-            }}
-          >
-            {loading ? (
-              <Image
-                src="/loading.svg"
-                alt="loading..."
-                width={32}
-                height={32}
-              />
-            ) : (
-              <Image src="/reload.svg" alt="reload..." width={32} height={32} />
-            )}
-          </button>
         </div>
       ) : (
         <div className="flex justify-center text-2xl">
