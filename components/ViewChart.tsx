@@ -34,7 +34,7 @@ const ViewChart = () => {
         const response = await axios.get("/api/GetChart");
         const allData = response.data.data.candlestick[0].ohlcv;
         const weekData = allData.slice(-7).map((item: any[]) => ({
-          time: new Date(item[5]),
+          time: new Date(item[5]).toISOString().split("T")[0],
           open: parseFloat(item[0]),
           high: parseFloat(item[1]),
           low: parseFloat(item[2]),
@@ -42,10 +42,9 @@ const ViewChart = () => {
         }));
         setChartData(weekData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("GetCharのAPI取得に失敗しました。", error);
       }
     };
-
     fetchChartData();
   }, []);
 
