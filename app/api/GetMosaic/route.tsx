@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { Address, RepositoryFactoryHttp } from "symbol-sdk";
 
 // アカウントの情報を取得しモザイクを取得する
-export const GET = async (request: NextRequest) => {
+export const GET = async () => {
   try {
     const address = process.env.NEXT_PUBLIC_ADDRESS || ""; // 公開アドレス
     const accountAddress = Address.createFromRawAddress(address);

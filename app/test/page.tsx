@@ -16,6 +16,7 @@
 
 // pages/index.tsx
 "use client";
+import Register from "@/components/Login/register";
 // import ViewMosaic from "@/components/Mosaic";
 import ViewChart from "@/components/ViewChart";
 import Chart from "@/components/ViewChart";
@@ -26,10 +27,7 @@ import { Mosaic } from "symbol-sdk";
 const Home = () => {
   return (
     <div>
-      <div className="w-1/2">test</div>
-      <div className="w-1/2">
-        <ViewChart />
-      </div>
+      <Register />
     </div>
   );
 };
