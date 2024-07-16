@@ -6,3 +6,5 @@ https://zenn.dev/nemtus/articles/blockchain-symbol-react-1st-symbol-sdk#%E4%BF%9
 ログイン認証 プリズマを使用して
 chart表示 react-chart.js-2
 mosaicのAPIからゲットして表示←これむずい。。。
+
+amCharts ローソク足

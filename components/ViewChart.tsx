@@ -1,40 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  TimeScale,
-  ChartOptions,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
-import "chartjs-adapter-date-fns";
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated"; // テーマをimportする必要があります
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  TimeScale
-);
+am4core.useTheme(am4themes_animated);
 
 const ViewChart = () => {
+  const chartRef = useRef<am4charts.XYChart>();
   const [chartData, setChartData] = useState<any[]>([]);
 
+  //APIをGETする。
   useEffect(() => {
     const fetchChartData = async () => {
       try {
         const response = await axios.get("/api/GetChart");
         const allData = response.data.data.candlestick[0].ohlcv;
         const weekData = allData.slice(-7).map((item: any[]) => ({
-          time: new Date(item[5]).toISOString().split("T")[0],
+          date: new Date(item[5]),
           open: parseFloat(item[0]),
           high: parseFloat(item[1]),
           low: parseFloat(item[2]),
@@ -48,71 +32,41 @@ const ViewChart = () => {
     fetchChartData();
   }, []);
 
-  const data = {
-    labels: chartData.map((item) => item.time),
-    datasets: [
-      {
-        label: "Open",
-        data: chartData.map((item) => item.open),
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "High",
-        data: chartData.map((item) => item.high),
-        backgroundColor: "rgba(255, 206, 86, 0.2)",
-        borderColor: "rgba(255, 206, 86, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "Low",
-        data: chartData.map((item) => item.low),
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "Close",
-        data: chartData.map((item) => item.close),
-        backgroundColor: "rgba(153, 102, 255, 0.2)",
-        borderColor: "rgba(153, 102, 255, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
+  useEffect(() => {
+    const chart = am4core.create("chartdiv", am4charts.XYChart);
+    chartRef.current = chart;
+    chart.paddingRight = 20;
 
-  const options: ChartOptions<"bar"> = {
-    scales: {
-      // X軸の設定
-      x: {
-        title: {
-          display: false,
-          text: "日付",
-        },
-        type: "time",
-        time: {
-          unit: "day",
-          displayFormats: {
-            day: "MM/dd",
-          },
-          tooltipFormat: "yyyy-MM-dd",
-        },
-      },
-      // Y軸の設定
-      y: {
-        title: {
-          display: false,
-          text: "価格",
-        },
-      },
-    },
-  };
+    const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.renderer.grid.template.location = 0;
+    dateAxis.dateFormats.setKey("day", "MM/dd");
+
+    const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    // valueAxis.tooltip.disabled = true;
+
+    // Define and set properties for the series immediately
+    const series = chart.series.push(new am4charts.CandlestickSeries());
+    series.dataFields.dateX = "date";
+    series.dataFields.valueY = "close";
+    series.dataFields.openValueY = "open";
+    series.dataFields.lowValueY = "low";
+    series.dataFields.highValueY = "high";
+    series.tooltipText =
+      "open: {openValueY.value}high: {highValueY.value}\nlow: {lowValueY.value}\nclose: {valueY.value}";
+
+    chart.cursor = new am4charts.XYCursor();
+
+    chart.data = chartData;
+
+    return () => {
+      chart.dispose();
+    };
+  }, [chartData]);
 
   return (
     <div>
-      <h1>XYM/JPY </h1>
-      <Bar data={data} options={options} />
+      <h1>XYM/JPY</h1>
+      <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
     </div>
   );
 };

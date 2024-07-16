@@ -25,9 +25,18 @@ import { useState } from "react";
 import { Mosaic } from "symbol-sdk";
 
 const Home = () => {
+  const [count, setCount] = useState<number>(0);
+  const addCount = () => {
+    setCount(count + 1);
+  };
   return (
     <div>
-      <Register />
+      {/* <Register />
+      <div>カウンター</div>
+      <div>{count}</div>
+      <button onClick={addCount}>＋1</button> */}
+
+      <ViewChart />
     </div>
   );
 };
