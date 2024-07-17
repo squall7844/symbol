@@ -16,7 +16,7 @@
 
 // pages/index.tsx
 "use client";
-import { ChageTheme } from "@/components/ChageTheme";
+
 import Register from "@/components/Login/register";
 // import ViewMosaic from "@/components/Mosaic";
 import ViewChart from "@/components/ViewChart";
@@ -36,7 +36,7 @@ const Home = () => {
       <div>カウンター</div>
       <div>{count}</div>
       <button onClick={addCount}>＋1</button> */}
-      <ChageTheme />
+
       {/* <ViewChart /> */}
     </div>
   );
