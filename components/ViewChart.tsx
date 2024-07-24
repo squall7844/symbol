@@ -33,18 +33,27 @@ const ViewChart = () => {
   }, []);
 
   useEffect(() => {
+    // chart全体の設定！！！
     const chart = am4core.create("chartdiv", am4charts.XYChart);
     chartRef.current = chart;
     chart.paddingRight = 20;
+    chart.cursor = new am4charts.XYCursor();
+    chart.data = chartData;
 
+    // X軸の設定！！！
     const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.renderer.grid.template.location = 0;
     dateAxis.dateFormats.setKey("day", "MM/dd");
+    dateAxis.renderer.minGridDistance = 30;
+    dateAxis.renderer.labels.template.fill = am4core.color("#FFFFFF"); // 文字の色を白にする
+    dateAxis.renderer.grid.template.disabled = true; //罫線をなしにする
 
+    // Y軸の設定！！！
     const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis.tooltip.disabled = true;
+    valueAxis.renderer.labels.template.fill = am4core.color("#FFFFFF"); // 文字の色を白にする
+    valueAxis.renderer.grid.template.disabled = true; //罫線をなしにする
 
-    // Define and set properties for the series immediately
+    // toolchipの設定！！１
     const series = chart.series.push(new am4charts.CandlestickSeries());
     series.dataFields.dateX = "date";
     series.dataFields.valueY = "close";
@@ -52,11 +61,7 @@ const ViewChart = () => {
     series.dataFields.lowValueY = "low";
     series.dataFields.highValueY = "high";
     series.tooltipText =
-      "open: {openValueY.value}high: {highValueY.value}\nlow: {lowValueY.value}\nclose: {valueY.value}";
-
-    chart.cursor = new am4charts.XYCursor();
-
-    chart.data = chartData;
+      "open: {openValueY.value}\nhigh: {highValueY.value}\nlow: {lowValueY.value}\nclose: {valueY.value}";
 
     return () => {
       chart.dispose();

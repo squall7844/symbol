@@ -47,11 +47,11 @@ const Price = () => {
     <div>
       {priceData && mosaics ? (
         <div>
-          <div className="neon-border-blue flex w-4/5 text-5xl p-4 m-5">
+          <div className="neon-border-blue flex w-10/12 text-5xl p-4 m-5">
             資産金額 : {assets}円
           </div>
           <div className="flex">
-            <ul className="neon-border-blue p-4 m-5">
+            <ul className="neon-border-blue w-4/12 p-4 m-5">
               {List.map((item, index) => (
                 <motion.li
                   key={item.title}
@@ -91,7 +91,7 @@ const Price = () => {
               </button>
             </ul>
 
-            <div className="neon-border-blue w-1/2 p-4 m-5">
+            <div className="neon-border-blue w-6/12 p-4 m-5">
               <Chart />
             </div>
           </div>

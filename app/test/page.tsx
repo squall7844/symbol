@@ -18,6 +18,7 @@
 "use client";
 
 import Register from "@/components/Login/register";
+import { ThemeSwitch } from "@/components/ThmeSwitch";
 // import ViewMosaic from "@/components/Mosaic";
 import ViewChart from "@/components/ViewChart";
 import Chart from "@/components/ViewChart";
@@ -36,7 +37,7 @@ const Home = () => {
       <div>カウンター</div>
       <div>{count}</div>
       <button onClick={addCount}>＋1</button> */}
-
+      <ThemeSwitch />
       {/* <ViewChart /> */}
     </div>
   );
