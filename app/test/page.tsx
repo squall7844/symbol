@@ -18,7 +18,7 @@
 "use client";
 
 import Register from "@/components/Login/register";
-import { ThemeSwitch } from "@/components/ThmeSwitch";
+import { ThemeSwitch } from "@/components/Theme/ThmeSwitch";
 // import ViewMosaic from "@/components/Mosaic";
 import ViewChart from "@/components/ViewChart";
 import Chart from "@/components/ViewChart";
