@@ -3,7 +3,8 @@
 @import "tailwindcss/utilities";
 
 /* 文字をネオン風に（青） */
-.neon-text-blue {
+.neon-mode {
+  background-image: linear-gradient(to bottom right, #000000, #1e293b, #5c6ac4);
   color: #fff;
   text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #0011ffad, 0 0 5px #0011ffad,
     0 0 7px #0011ffad, 0 0 10px #0011ffad, 0 0 15px #0011ffad;

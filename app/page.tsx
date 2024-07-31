@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="h-full bg-gradient-to-br from-black via-slate-800 to-indigo-950  neon-text-blue ">
+    <div className="h-full neon-text-blue ">
       <div className="flex text-left text-3xl font-serif p-5">
         <Image
           src="/symbol.webp"

@@ -2,11 +2,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
-
 import Chart from "./ViewChart";
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
+import { ThemeSwitch } from "./Theme/ThmeSwitch";
 
 const Price = () => {
+  const { theme } = useTheme();
   const [priceData, setPriceData] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [mosaics, setMosaics] = useState("");
@@ -44,20 +46,29 @@ const Price = () => {
   ];
 
   return (
-    <div>
+    <div className={theme === "dark" ? "neon-mode" : ""}>
+      <ThemeSwitch />
       {priceData && mosaics ? (
         <div>
-          <div className="neon-border-blue flex w-10/12 text-5xl p-4 m-5">
+          <div
+            className={`flex w-10/12 text-5xl p-4 m-5 ${
+              theme === "dark" ? "neon-border-blue" : ""
+            }`}
+          >
             資産金額 : {assets}円
           </div>
           <div className="flex">
-            <ul className="neon-border-blue w-4/12 p-4 m-5">
+            <ul
+              className={`w-4/12 p-4 m-5 ${
+                theme === "dark" ? "neon-border-blue" : ""
+              }`}
+            >
               {List.map((item, index) => (
                 <motion.li
                   key={item.title}
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.5 }} // インデックスに応じて遅延時間を設定
+                  transition={{ duration: 0.5, delay: index * 0.5 }}
                   className="border-b-2 border-white text-3xl w-auto p-2 m-5"
                 >
                   {item.title} : {item.value}
@@ -83,7 +94,6 @@ const Price = () => {
                   <Image
                     src="/reload.svg"
                     alt="reload..."
-                    className=""
                     width={64}
                     height={64}
                   />
@@ -91,7 +101,11 @@ const Price = () => {
               </button>
             </ul>
 
-            <div className="neon-border-blue w-6/12 p-4 m-5">
+            <div
+              className={`w-6/12 p-4 m-5 ${
+                theme === "dark" ? "neon-border-blue" : ""
+              }`}
+            >
               <Chart />
             </div>
           </div>
