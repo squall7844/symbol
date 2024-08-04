@@ -46,21 +46,32 @@ const Price = () => {
   ];
 
   return (
-    <div className={theme === "dark" ? "neon-mode" : ""}>
+    // <div className={theme === "dark" ? "neon-mode" : ""}>
+    <div>
+      <div className="flex text-left text-3xl font-serif p-5">
+        <Image
+          src="/symbol.webp"
+          alt="XYM"
+          width={48}
+          height={48}
+          className="animate-pulse mr-5"
+        />
+        XYMBOL 残高確認アプリ
+      </div>
       <ThemeSwitch />
       {priceData && mosaics ? (
         <div>
           <div
             className={`flex w-10/12 text-5xl p-4 m-5 ${
-              theme === "dark" ? "neon-border-blue" : ""
+              theme === "dark" ? "neon-border-blue" : "light-border"
             }`}
           >
             資産金額 : {assets}円
           </div>
           <div className="flex">
             <ul
-              className={`w-4/12 p-4 m-5 ${
-                theme === "dark" ? "neon-border-blue" : ""
+              className={`lg:w-4/12 w-10/12 p-4 m-5 ${
+                theme === "dark" ? "neon-border-blue" : "light-border"
               }`}
             >
               {List.map((item, index) => (
@@ -69,7 +80,9 @@ const Price = () => {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.5 }}
-                  className="border-b-2 border-white text-3xl w-auto p-2 m-5"
+                  className={`border-b-2 text-3xl w-auto p-2 m-5 ${
+                    theme === "dark" ? "border-white" : "border-black"
+                  }`}
                 >
                   {item.title} : {item.value}
                 </motion.li>
@@ -102,8 +115,8 @@ const Price = () => {
             </ul>
 
             <div
-              className={`w-6/12 p-4 m-5 ${
-                theme === "dark" ? "neon-border-blue" : ""
+              className={`hidden lg:block w-6/12 p-4 m-5 ${
+                theme === "dark" ? "neon-border-blue" : "light-border"
               }`}
             >
               <Chart />

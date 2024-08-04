@@ -1,21 +1,10 @@
 import Price from "@/components/Price";
 import { Response } from "@/components/Response";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="h-full neon-text-blue ">
-      <div className="flex text-left text-3xl font-serif p-5">
-        <Image
-          src="/symbol.webp"
-          alt="XYM"
-          width={48}
-          height={48}
-          className="animate-pulse mr-5"
-        />
-        XYMBOL 残高確認アプリ
-      </div>
+    <div className="h-full">
       <Response />
       <Price />
       <Link className="text-center mb-14" href="/test">
