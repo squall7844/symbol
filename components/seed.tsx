@@ -2,7 +2,7 @@ import prisma from "@/app/lib/prisma";
 
 async function Seed() {
   const response = await Promise.all([
-    prisma.$executeRawUnsafe(`TRUNCATE TABLE "User" CASCADE;`),
+    prisma.$executeRawUnsafe(`TRUNCATE TABLE user CASCADE;`),
     prisma.user.createMany({
       data: [
         {
@@ -27,7 +27,7 @@ async function Seed() {
           xym_public_key: "tettetetetetetetet",
         },
         {
-          id: 5,
+          id: 4,
           email: "hoge4",
           password: "testdesuyo!",
           name: "testhoge4",

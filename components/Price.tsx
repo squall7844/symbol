@@ -42,7 +42,8 @@ const Price = () => {
     { title: "利益", value: profit + "円 " + result },
     { title: "投資金額", value: investment / 10000 + "万円" },
     { title: "モザイク数", value: My_Xym },
-    { title: "ハーベスト数", value: 21 + "回" },
+    { title: "ハーベスト数", value: 23 + "回" },
+    { title: "harvest記録", value: "19から開始" },
   ];
 
   return (
