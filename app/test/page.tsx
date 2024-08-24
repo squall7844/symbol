@@ -1,49 +1,34 @@
-import prisma from "@/app/lib/prisma";
+"use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-async function Seed() {
-  const response = await Promise.all([
-    prisma.$executeRawUnsafe(`TRUNCATE TABLE "User" CASCADE;`),
-    prisma.user.createMany({
-      data: [
-        {
-          id: 2,
-          email: "hoge1",
-          password: "testdesuyo!",
-          name: "testhogea",
-          xym_public_key: "tettetetetetetetet",
-        },
-        {
-          id: 3,
-          email: "hoge2",
-          password: "testdesuyo!",
-          name: "testhoge2",
-          xym_public_key: "tettetetetetetetet",
-        },
-        {
-          id: 4,
-          email: "hoge3",
-          password: "testdesuyo!",
-          name: "testhoge3",
-          xym_public_key: "tettetetetetetetet",
-        },
-        {
-          id: 5,
-          email: "hoge4",
-          password: "testdesuyo!",
-          name: "testhoge4",
-          xym_public_key: "tettetetetetetetet",
-        },
-      ],
-    }),
-  ]);
-  console.log(response);
-}
-Seed()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+const Test = () => {
+  const [DbData, setDbData] = useState<any>(null);
+  // DB情報を取得する
+  const fetchDBData = () => {
+    axios.get("/api/GetDB").then((response) => {
+      setDbData(response.data);
+    });
+  };
+  // データをリロード時に取得する
+  useEffect(() => {
+    fetchDBData();
+  }, []);
+
+  return (
+    <div>
+      <ul>
+        {DbData &&
+          DbData.allPosts.map((post: any) => (
+            <li key={post.id} className="p-3 m-3">
+              {post.id}:{post.email}:{post.password}
+              {post.name}
+              {post.xym_public_key}
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Test;

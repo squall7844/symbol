@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
-import Chart from "./ViewChart";
+import Chart from "../Chart/ViewChart";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { ThemeSwitch } from "./Theme/ThmeSwitch";
+import { ThemeSwitch } from "../Theme/ThmeSwitch";
 
 const Price = () => {
   const { theme } = useTheme();

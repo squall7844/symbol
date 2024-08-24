@@ -1,5 +1,5 @@
-import axios from "axios";
 import { NextResponse } from "next/server";
+import axios from "axios";
 
 //ビットバンクAPIから通貨の金額を取得
 export const GET = async () => {
