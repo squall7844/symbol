@@ -1,5 +1,5 @@
-import Price from "@/components/Price";
-import { Response } from "@/components/Response";
+import Price from "@/components/Price/Price";
+import Response from "@/components/Responsive/Response";
 import Link from "next/link";
 
 export default function Home() {
