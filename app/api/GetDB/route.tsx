@@ -19,10 +19,24 @@ const connectDB = async () => {
 export const GET = async (req: Request, res: NextResponse) => {
   try {
     await connectDB();
-    const allPosts = await prisma.user.findMany();
-    return NextResponse.json({ message: "成功", allPosts }, { status: 200 });
+    const postId2 = await prisma.user.findUnique({
+      where: {
+        id: 2,
+      },
+      select: {
+        xym_public_key: true,
+      },
+    });
+
+    // Objectから値を定数にする
+    const post = postId2?.xym_public_key;
+
+    return NextResponse.json(post);
   } catch (err) {
-    return NextResponse.json({ message: "失敗", err }, { status: 500 });
+    return NextResponse.json(
+      { error: "DBの取得に失敗しました。" },
+      { status: 500 }
+    );
   } finally {
     await prisma?.$disconnect;
   }

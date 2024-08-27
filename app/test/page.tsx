@@ -17,16 +17,8 @@ const Test = () => {
 
   return (
     <div>
-      <ul>
-        {DbData &&
-          DbData.allPosts.map((post: any) => (
-            <li key={post.id} className="p-3 m-3">
-              {post.id}:{post.email}:{post.password}
-              {post.name}
-              {post.xym_public_key}
-            </li>
-          ))}
-      </ul>
+      {/* <div>{JSON.stringify(DbData)}</div> */}
+      <div>{DbData}</div>
     </div>
   );
 };
