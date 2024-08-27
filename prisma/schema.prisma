@@ -13,4 +13,5 @@ model User {
   password String
   name     String?
   xym_public_key String?
+  amount String?
 }
