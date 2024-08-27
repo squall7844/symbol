@@ -11,7 +11,7 @@ export const GET = async () => {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch data" },
+      { error: "仮想通貨の取得に失敗しました。" },
       { status: 500 }
     );
   }

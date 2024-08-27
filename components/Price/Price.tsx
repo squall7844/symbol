@@ -10,8 +10,9 @@ import { ThemeSwitch } from "@/components/Theme/ThmeSwitch";
 const Price = () => {
   const { theme } = useTheme();
   const [priceData, setPriceData] = useState<any>();
+  const [mosaics, setMosaics] = useState(null);
+  const [DbData, setDbData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [mosaics, setMosaics] = useState("");
 
   const fetchPriceData = () => {
     // 仮想通貨(XYM)の最新価格を取得
@@ -22,6 +23,10 @@ const Price = () => {
     axios.get("/api/GetMosaic").then((response) => {
       setMosaics(response.data);
     });
+    // DB情報を取得
+    axios.get("/api/GetDB").then((response) => {
+      setDbData(response.data);
+    });
   };
   // データをリロード時に取得する
   useEffect(() => {
@@ -31,8 +36,9 @@ const Price = () => {
   // 定数を定義
   const Xym: any = priceData && priceData.data ? priceData.data.last : 0; //XYMの金額
   const My_Xym: number = Number(mosaics); // モザイク数を見やすい数字に修正
-  const assets: number = Math.round(Xym * My_Xym); //資産金額
   const investment: number = 100000; //投資金額
+  const test: string = DbData;
+  const assets: number = Math.round(Xym * My_Xym); //資産金額
   const profit: number = Math.round(Xym * My_Xym - investment); //利益
   const result: string = profit > 0 ? "😊" : "😔";
 
@@ -97,6 +103,7 @@ const Price = () => {
                   }, 1000);
                 }}
               >
+                <div>{test}</div>
                 {loading ? (
                   <Image
                     src="/loading.svg"

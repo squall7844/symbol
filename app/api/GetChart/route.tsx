@@ -10,7 +10,7 @@ export const GET = async () => {
     return NextResponse.json(response.data);
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch data" },
+      { error: "Chartの取得に失敗しました。" },
       { status: 500 }
     );
   }

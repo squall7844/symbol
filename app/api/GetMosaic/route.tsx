@@ -23,6 +23,9 @@ export const GET = async () => {
     return NextResponse.json(amounts);
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "API取得失敗" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Mosaicの取得に失敗しました。" },
+      { status: 500 }
+    );
   }
 };
