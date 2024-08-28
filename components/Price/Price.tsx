@@ -16,17 +16,34 @@ const Price = () => {
 
   const fetchPriceData = () => {
     // 仮想通貨(XYM)の最新価格を取得
-    axios.get("/api/GetPrice").then((response) => {
-      setPriceData(response.data);
-    });
+    axios
+      .get("/api/GetPrice")
+      .then((response) => {
+        setPriceData(response.data);
+      })
+      .catch((error) => {
+        console.error("GetPriceのAPI取得に失敗しました。:", error);
+      });
+
     // 現在のモザイク数を取得
-    axios.get("/api/GetMosaic").then((response) => {
-      setMosaics(response.data);
-    });
+    axios
+      .get("/api/GetMosaic")
+      .then((response) => {
+        setMosaics(response.data);
+      })
+      .catch((error) => {
+        console.error("GetMosaicのAPI取得に失敗しました。:", error);
+      });
+
     // DB情報を取得
-    axios.get("/api/GetDB").then((response) => {
-      setDbData(response.data);
-    });
+    axios
+      .get("/api/GetDB")
+      .then((response) => {
+        setDbData(response.data);
+      })
+      .catch((error) => {
+        console.error("GetDBのAPI取得に失敗しました。:", error);
+      });
   };
   // データをリロード時に取得する
   useEffect(() => {
