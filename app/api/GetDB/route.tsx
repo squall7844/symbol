@@ -19,17 +19,16 @@ const connectDB = async () => {
 export const GET = async (req: Request, res: NextResponse) => {
   try {
     await connectDB();
-    const postId2 = await prisma.user.findUnique({
+    const postID = await prisma.user.findUnique({
       where: {
-        id: 2,
+        id: 1,
       },
       select: {
-        xym_public_key: true,
+        harvest: true,
+        amount: true,
       },
     });
-
-    // Objectから値を定数にする
-    const post = postId2?.xym_public_key;
+    const post = postID;
 
     return NextResponse.json(post);
   } catch (err) {
@@ -38,6 +37,6 @@ export const GET = async (req: Request, res: NextResponse) => {
       { status: 500 }
     );
   } finally {
-    await prisma?.$disconnect;
+    await prisma?.$disconnect();
   }
 };

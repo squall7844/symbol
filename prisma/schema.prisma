@@ -11,7 +11,7 @@ model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
   password String
-  name     String?
-  xym_public_key String?
-  amount String?
+  name String?
+  amount Int?
+  harvest Int?
 }

@@ -53,8 +53,8 @@ const Price = () => {
   // 定数を定義
   const Xym: any = priceData && priceData.data ? priceData.data.last : 0; //XYMの金額
   const My_Xym: number = Number(mosaics); // モザイク数を見やすい数字に修正
-  const investment: number = 100000; //投資金額
-  const test: string = DbData;
+  const investment: number = DbData ? DbData.amount : 0; //投資金額
+  const harvest: number = DbData ? DbData.harvest : 0; //ハーベスト回数
   const assets: number = Math.round(Xym * My_Xym); //資産金額
   const profit: number = Math.round(Xym * My_Xym - investment); //利益
   const result: string = profit > 0 ? "😊" : "😔";
@@ -65,7 +65,7 @@ const Price = () => {
     { title: "利益", value: profit + "円 " + result },
     { title: "投資金額", value: investment / 10000 + "万円" },
     { title: "モザイク数", value: My_Xym },
-    { title: "ハーベスト数", value: 23 + "回" },
+    { title: "ハーベスト数", value: harvest + "回" },
     { title: "harvest記録", value: "19から開始" },
   ];
 
@@ -120,7 +120,6 @@ const Price = () => {
                   }, 1000);
                 }}
               >
-                <div>{test}</div>
                 {loading ? (
                   <Image
                     src="/loading.svg"
