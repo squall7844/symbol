@@ -1,26 +1,27 @@
-"use client";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { PrismaClient } from "@prisma/client";
 
-const Test = () => {
-  const [DbData, setDbData] = useState<any>(null);
-  // DB情報を取得する
-  const fetchDBData = () => {
-    axios.get("/api/GetDB").then((response) => {
-      setDbData(response.data);
-    });
-  };
-  // データをリロード時に取得する
-  useEffect(() => {
-    fetchDBData();
-  }, []);
+const prisma = new PrismaClient();
 
-  return (
-    <div>
-      {/* <div>{JSON.stringify(DbData)}</div> */}
-      <div>{DbData}</div>
-    </div>
-  );
-};
+async function Seed() {
+  // ユーザーデータを作成
+  const newUser = await prisma.user.create({
+    data: {
+      email: "example5@example.com",
+      password: "password55",
+      name: "test",
+      xym_public_key: "public_key",
+      amount: "100",
+    },
+  });
+  console.log(newUser);
 
-export default Test;
+  // データベース接続を切断
+  await prisma.$disconnect();
+}
+
+Seed().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
+
+export default Seed;
