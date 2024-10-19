@@ -1,3 +1,5 @@
+//apiで使用していたが、公開アドレスが急にレスポンスをかえさなくなったため使用しないこととする。
+
 import { NextResponse } from "next/server";
 import { Address, RepositoryFactoryHttp } from "symbol-sdk";
 

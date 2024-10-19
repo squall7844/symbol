@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated"; // テーマをimportする必要があります
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 am4core.useTheme(am4themes_animated);
 
@@ -53,7 +53,7 @@ const ViewChart = () => {
     valueAxis.renderer.labels.template.fill = am4core.color("#FFFFFF"); // 文字の色を白にする
     valueAxis.renderer.grid.template.disabled = true; //罫線をなしにする
 
-    // toolchipの設定！！１
+    // toolchipの設定！！
     const series = chart.series.push(new am4charts.CandlestickSeries());
     series.dataFields.dateX = "date";
     series.dataFields.valueY = "close";

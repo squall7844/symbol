@@ -9,17 +9,25 @@ import { ThemeSwitch } from "@/components/Theme/ThmeSwitch";
 
 const Price = () => {
   const { theme } = useTheme();
-  const [priceData, setPriceData] = useState<any>();
-  const [mosaics, setMosaics] = useState(null);
+  const [priceData, setPriceData] = useState(null);
+  const [coinAmount, setCoinAmount] = useState(null);
   const [DbData, setDbData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+
+  // 定数を定義
+  const investment = DbData ? DbData.amount : 0; //投資金額
+  const xymPrice = Number(priceData); //XYMの金額
+  const xymAmount = Math.round(Number(coinAmount)); //XYMの保有量
+  const assets = Math.round(xymPrice * xymAmount); //資産金額
+  const profit = Math.round(assets - investment); //利益
+  const result = profit > 0 ? "😊" : "😔";
 
   const fetchPriceData = () => {
     // 仮想通貨(XYM)の最新価格を取得
     axios
       .get("/api/GetPrice")
       .then((response) => {
-        setPriceData(response.data);
+        setPriceData(response.data.price);
       })
       .catch((error) => {
         console.error("GetPriceのAPI取得に失敗しました。:", error);
@@ -27,12 +35,12 @@ const Price = () => {
 
     // 現在のモザイク数を取得
     axios
-      .get("/api/GetMosaic")
+      .get("/api/GetXym")
       .then((response) => {
-        setMosaics(response.data);
+        setCoinAmount(response.data.onhandAmount);
       })
       .catch((error) => {
-        console.error("GetMosaicのAPI取得に失敗しました。:", error);
+        console.error("GetXymのAPI取得に失敗しました。:", error);
       });
 
     // DB情報を取得
@@ -50,23 +58,12 @@ const Price = () => {
     fetchPriceData();
   }, []);
 
-  // 定数を定義
-  const Xym: any = priceData && priceData.data ? priceData.data.last : 0; //XYMの金額
-  const My_Xym: number = Number(mosaics); // モザイク数を見やすい数字に修正
-  const investment: number = DbData ? DbData.amount : 0; //投資金額
-  const harvest: number = DbData ? DbData.harvest : 0; //ハーベスト回数
-  const assets: number = Math.round(Xym * My_Xym); //資産金額
-  const profit: number = Math.round(Xym * My_Xym - investment); //利益
-  const result: string = profit > 0 ? "😊" : "😔";
-
   // map関数用配列
   const List = [
-    { title: "XYM現在の金額", value: Xym },
+    { title: "現在価格(XYM)", value: xymPrice + "円" },
+    { title: "XYM保有量", value: xymAmount + "枚" },
     { title: "利益", value: profit + "円 " + result },
     { title: "投資金額", value: investment / 10000 + "万円" },
-    { title: "モザイク数", value: My_Xym },
-    { title: "ハーベスト数", value: harvest + "回" },
-    { title: "harvest記録", value: "19から開始" },
   ];
 
   return (
@@ -83,7 +80,7 @@ const Price = () => {
         XYMBOL 残高確認アプリ
       </div>
       <ThemeSwitch />
-      {priceData && mosaics ? (
+      {priceData ? (
         <div>
           <div
             className={`flex w-10/12 text-5xl p-4 m-5 ${
