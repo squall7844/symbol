@@ -1,25 +1,33 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
-// USERテーブルの情報を取得する
+// Prismaクライアントのグローバルインスタンス
+let prisma: PrismaClient;
 
-// インスタンス化
-const prisma = new PrismaClient();
+if (process.env.NODE_ENV === "production") {
+  prisma = new PrismaClient();
+} else {
+  if (!(global as any).prisma) {
+    (global as any).prisma = new PrismaClient();
+  }
+  prisma = (global as any).prisma;
+}
 
 // メイン関数でDBの接続をする
 const connectDB = async () => {
   try {
     await prisma.$connect();
   } catch (err) {
-    return Error("DB接続に失敗しました。");
+    console.error("DB接続に失敗しました。", err);
+    throw new Error("DB接続に失敗しました。");
   }
 };
 
-// GETでUSERテーブルの情報をすべて取得
-export const GET = async (req: Request, res: NextResponse) => {
+// GETでUSERテーブルの情報を取得
+export const GET = async (req: Request) => {
   try {
     await connectDB();
-    const postID = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         id: 1,
       },
@@ -28,15 +36,55 @@ export const GET = async (req: Request, res: NextResponse) => {
         amount: true,
       },
     });
-    const post = postID;
 
-    return NextResponse.json(post);
+    if (!user) {
+      return NextResponse.json(
+        { error: "ユーザーが見つかりません。" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(user);
   } catch (err) {
+    console.error("DBの取得に失敗しました。", err);
     return NextResponse.json(
       { error: "DBの取得に失敗しました。" },
       { status: 500 }
     );
   } finally {
-    await prisma?.$disconnect();
+    await prisma.$disconnect();
+  }
+};
+
+// PUTでUSERテーブルの情報をアップデート
+export const PUT = async (req: Request) => {
+  try {
+    await connectDB();
+    const { id, harvest, amount } = await req.json();
+
+    if (!id || (harvest === undefined && amount === undefined)) {
+      return NextResponse.json(
+        { error: "無効なリクエストデータです。" },
+        { status: 400 }
+      );
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: Number(id) },
+      data: {
+        ...(harvest !== undefined && { harvest }),
+        ...(amount !== undefined && { amount }),
+      },
+    });
+
+    return NextResponse.json(updatedUser);
+  } catch (err) {
+    console.error("ユーザー情報の更新に失敗しました。", err);
+    return NextResponse.json(
+      { error: "ユーザー情報の更新に失敗しました。" },
+      { status: 500 }
+    );
+  } finally {
+    await prisma.$disconnect();
   }
 };
