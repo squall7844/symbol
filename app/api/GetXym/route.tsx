@@ -31,6 +31,8 @@ export const GET = async () => {
       (asset: { asset: string }) => asset.asset === "xym"
     )?.onhand_amount;
 
+    console.log(response.data);
+
     return onhandAmount
       ? NextResponse.json({ onhandAmount })
       : NextResponse.json(

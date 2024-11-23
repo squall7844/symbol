@@ -1,9 +1,22 @@
-const Test = () => {
+import Link from "next/link";
+
+const test = () => {
   return (
-    <div>
-      <div>test</div>
+    <div className="p-5">
+      <Link className="p-5" href="/api/GetXym">
+        GetXym
+      </Link>
+      <Link className="p-5" href="/api/GetPrice">
+        GetPrice
+      </Link>
+      <Link className="p-5" href="/api/GetDB">
+        GetDB
+      </Link>
+      <Link className="p-5" href="/api/GetChart">
+        GetChart
+      </Link>
     </div>
   );
 };
 
-export default Test;
+export default test;
