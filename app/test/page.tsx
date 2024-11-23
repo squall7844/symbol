@@ -3,7 +3,7 @@ import Link from "next/link";
 const test = () => {
   return (
     <div className="p-5">
-      <Link className="p-5" href="/api/GetXym">
+      <Link className="p-5" href="/api/GetCoins">
         GetXym
       </Link>
       <Link className="p-5" href="/api/GetPrice">

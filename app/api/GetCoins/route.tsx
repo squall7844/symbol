@@ -27,18 +27,16 @@ export const GET = async () => {
     });
 
     // 取得したデータからXYMの保有量を抽出
-    const onhandAmount = response.data?.data?.assets?.find(
+    const assets = response.data?.data?.assets;
+    console.log(assets);
+    const xymAmount = assets?.find(
       (asset: { asset: string }) => asset.asset === "xym"
     )?.onhand_amount;
+    const jpyAmount = assets?.find(
+      (asset: { asset: string }) => asset.asset === "jpy"
+    )?.onhand_amount;
 
-    console.log(response.data);
-
-    return onhandAmount
-      ? NextResponse.json({ onhandAmount })
-      : NextResponse.json(
-          { error: "XYMの資産情報が見つかりませんでした。" },
-          { status: 404 }
-        );
+    return NextResponse.json({ xymAmount, jpyAmount });
   } catch (error) {
     return NextResponse.json(
       { error: "ビットバンクのAPI取得に失敗しました。" },
