@@ -15,6 +15,9 @@ const test = () => {
       <Link className="p-5" href="/api/GetChart">
         GetChart
       </Link>
+      <Link className="p-5" href="/">
+        Home
+      </Link>
     </div>
   );
 };
