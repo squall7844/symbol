@@ -28,7 +28,6 @@ export const GET = async () => {
 
     // 取得したデータからXYMの保有量を抽出
     const assets = response.data?.data?.assets;
-    console.log(assets);
     const xymAmount = assets?.find(
       (asset: { asset: string }) => asset.asset === "xym"
     )?.onhand_amount;

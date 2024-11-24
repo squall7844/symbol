@@ -7,18 +7,27 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { ThemeSwitch } from "@/components/Theme/ThmeSwitch";
 
+interface DBData {
+  amount: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId?: string;
+}
+
 const Price = () => {
   const { theme } = useTheme();
   const [priceData, setPriceData] = useState(null);
-  const [coinAmount, setCoinAmount] = useState(null);
-  const [DbData, setDbData] = useState<any>(null);
+  const [xymCoins, setXymCoins] = useState<number | null>(null);
+  const [jpyCoins, setJpyCoins] = useState<number | null>(null);
+  const [DbData, setDbData] = useState<DBData | null>(null);
   const [loading, setLoading] = useState(false);
 
   // 定数を定義
-  const investment = DbData ? DbData.amount : 0; //投資金額
+  const investment = DbData ? DbData.amount : 0;
   const xymPrice = Number(priceData); //XYMの金額
-  const xymAmount = Math.round(Number(coinAmount)); //XYMの保有量
-  const assets = Math.round(xymPrice * xymAmount); //資産金額
+  const xymAmount = Math.round(Number(xymCoins)); //XYMの保有量
+  const jpyAmount = Math.round(Number(jpyCoins)); //JPYの保有量
+  const assets = Math.round(xymPrice * xymAmount) + jpyAmount; //資産金額
   const profit = Math.round(assets - investment); //利益
   const result = profit > 0 ? "😊" : "😔";
 
@@ -35,9 +44,10 @@ const Price = () => {
 
     // 現在のモザイク数を取得
     axios
-      .get("/api/GetXym")
+      .get("/api/GetCoins")
       .then((response) => {
-        setCoinAmount(response.data.onhandAmount);
+        setXymCoins(response.data.xymAmount);
+        setJpyCoins(response.data.jpyAmount);
       })
       .catch((error) => {
         console.error("GetXymのAPI取得に失敗しました。:", error);
@@ -62,6 +72,7 @@ const Price = () => {
   const List = [
     { title: "現在価格(XYM)", value: xymPrice + "円" },
     { title: "XYM保有量", value: xymAmount + "枚" },
+    { title: "JPY保有量", value: jpyAmount + "円" },
     { title: "利益", value: profit + "円 " + result },
     { title: "投資金額", value: investment / 10000 + "万円" },
   ];
