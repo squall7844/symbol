@@ -9,10 +9,23 @@ export const GET = async () => {
   try {
     const response = await axios.get(`${URL}/${PAIR}/candlestick/1day/2024`, {
       headers: {
-        "Cache-Control": "no-cache",
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
       },
     });
-    return NextResponse.json(response.data);
+
+    // レスポンスにキャッシュ無効化ヘッダーを追加
+    const nextResponse = NextResponse.json(response.data);
+    nextResponse.headers.set(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    nextResponse.headers.set("Pragma", "no-cache");
+    nextResponse.headers.set("Expires", "0");
+
+    return nextResponse;
   } catch (error) {
     return NextResponse.json(
       { error: "Chartの取得に失敗しました。" },
