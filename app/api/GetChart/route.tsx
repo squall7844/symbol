@@ -9,10 +9,7 @@ export const GET = async () => {
   try {
     const response = await axios.get(`${URL}/${PAIR}/candlestick/1day/2024`, {
       headers: {
-        "Cache-Control":
-          "no-store, no-cache, must-revalidate, proxy-revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
+        "Cache-Control": "no-cache",
       },
     });
     return NextResponse.json(response.data);

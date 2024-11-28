@@ -2,12 +2,17 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 const PAIR = process.env.BITBANK_PAIR || "";
-const URL  = process.env.BITBANK_PUBLIC_URL || "";
+const URL = process.env.BITBANK_PUBLIC_URL || "";
 
 //ビットバンクAPIから通貨の金額を取得
 export const GET = async () => {
   try {
-    const response = await axios.get(`${URL}/${PAIR}/ticker`);
+    const response = await axios.get(`${URL}/${PAIR}/ticker`, {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    });
+
     const price = response.data.data.last;
     return NextResponse.json({ price });
   } catch (error) {

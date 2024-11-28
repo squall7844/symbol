@@ -34,9 +34,7 @@ export const GET = async () => {
         "ACCESS-KEY": API_KEY,
         "ACCESS-NONCE": nonce,
         "ACCESS-SIGNATURE": signature,
-        // ビットバンクAPIリクエストにもキャッシュ制御を追加
         "Cache-Control": "no-cache",
-        Pragma: "no-cache",
       },
     });
 
