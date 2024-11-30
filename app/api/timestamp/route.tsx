@@ -8,7 +8,11 @@ export async function GET(request: Request) {
     {
       status: 200,
       headers: {
-        "Cache-Control": "no-store",
+        // キャッシュを完全に無効化するヘッダーを追加
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+        // Vercel特有のキャッシュコントロール
         "CDN-Cache-Control": "no-store",
         "Vercel-CDN-Cache-Control": "no-store",
       },
