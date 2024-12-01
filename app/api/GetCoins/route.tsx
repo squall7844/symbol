@@ -1,7 +1,6 @@
 import axios from "axios";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
-import { headers } from "next/headers";
 
 // ビットバンクAPIをenvから取得
 const API_URL = process.env.BITBANK_API_URL || "";
@@ -10,16 +9,6 @@ const API_SECRET = process.env.BITBANK_API_SECRET || "";
 
 // 通貨の保有量を取得　ヘッダーをつけてAPI認証
 export const GET = async () => {
-  // レスポンスヘッダーの設定を追加
-  const response = NextResponse.next({
-    headers: {
-      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-      Pragma: "no-cache",
-      Expires: "0",
-      "Surrogate-Control": "no-store",
-    },
-  });
-
   const path = "/v1/user/assets";
   const nonce = Date.now().toString();
   const message = nonce + path;
@@ -47,31 +36,12 @@ export const GET = async () => {
       (asset: { asset: string }) => asset.asset === "jpy"
     )?.onhand_amount;
 
-    return NextResponse.json(
-      { xymAmount, jpyAmount },
-      {
-        headers: {
-          "Cache-Control":
-            "no-store, no-cache, must-revalidate, proxy-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
-          "Surrogate-Control": "no-store",
-        },
-      }
-    );
+    return NextResponse.json({ xymAmount, jpyAmount });
   } catch (error) {
-    return NextResponse.json(
-      { error: "ビットバンクのAPI取得に失敗しました。" },
-      {
-        status: 500,
-        headers: {
-          "Cache-Control":
-            "no-store, no-cache, must-revalidate, proxy-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
-          "Surrogate-Control": "no-store",
-        },
-      }
-    );
+    return NextResponse.json({
+      error: "ビットバンクのAPI取得に失敗しました。",
+    });
   }
 };
+
+export const revalidate = 0;

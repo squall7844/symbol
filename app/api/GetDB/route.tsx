@@ -88,3 +88,5 @@ export const PUT = async (req: Request) => {
     await prisma.$disconnect();
   }
 };
+
+export const revalidate = 0;
