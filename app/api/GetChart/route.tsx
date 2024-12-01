@@ -7,13 +7,7 @@ const URL = process.env.BITBANK_PUBLIC_URL || "";
 // ビットバンクのAPIから1週間足のチャートデータを取得
 export const GET = async () => {
   try {
-    const response = await axios.get(`${URL}/${PAIR}/candlestick/1day/2024`, {
-      headers: {
-        "Cache-Control": "no-store",
-        "CDN-Cache-Control": "no-store",
-        "Vercel-CDN-Cache-Control": "no-store",
-      },
-    });
+    const response = await axios.get(`${URL}/${PAIR}/candlestick/1day/2024`);
 
     const nextResponse = NextResponse.json(response.data);
 
@@ -25,3 +19,5 @@ export const GET = async () => {
     );
   }
 };
+
+export const revalidate = 0;

@@ -8,26 +8,10 @@ const URL = process.env.BITBANK_PUBLIC_URL || "";
 export const GET = async () => {
   try {
     // ビットバンクAPIからデータ取得
-    const response = await axios.get(`${URL}/${PAIR}/ticker`, {
-      headers: {
-        "Cache-Control":
-          "no-store, no-cache, must-revalidate, proxy-revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
-    });
+    const response = await axios.get(`${URL}/${PAIR}/ticker`);
 
     const price = response.data.data.last;
-
-    // レスポンスヘッダーでキャッシュを無効化
     const nextResponse = NextResponse.json({ price });
-    nextResponse.headers.set(
-      "Cache-Control",
-      "no-store, no-cache, must-revalidate, proxy-revalidate"
-    );
-    nextResponse.headers.set("Pragma", "no-cache");
-    nextResponse.headers.set("Expires", "0");
-
     return nextResponse;
   } catch (error) {
     console.error("Error fetching cryptocurrency price:", error);
@@ -37,3 +21,5 @@ export const GET = async () => {
     );
   }
 };
+
+export const revalidate = 0;
