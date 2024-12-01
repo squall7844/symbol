@@ -7,19 +7,38 @@ const URL = process.env.BITBANK_PUBLIC_URL || "";
 // ビットバンクAPIから通貨の金額を取得
 export const GET = async () => {
   try {
+    if (!PAIR || !URL) {
+      throw new Error("Environment variables are not set properly");
+    }
+
     // ビットバンクAPIからデータ取得
+    console.log("Fetching URL:", `${URL}/${PAIR}/ticker`);
     const response = await axios.get(`${URL}/${PAIR}/ticker`);
 
     const price = response.data.data.last;
-    const nextResponse = NextResponse.json({ price });
+
+    // キャッシュ無効化ヘッダー付きでレスポンス
+    const nextResponse = NextResponse.json(
+      { price },
+      {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
+
     return nextResponse;
   } catch (error) {
     console.error("Error fetching cryptocurrency price:", error);
+
     return NextResponse.json(
       { error: "仮想通貨の取得に失敗しました。" },
-      { status: 500 }
+      {
+        status: 500,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
     );
   }
 };
-
-export const revalidate = 0;
