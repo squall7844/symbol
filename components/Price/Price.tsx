@@ -84,8 +84,8 @@ const Price = () => {
         <Image
           src="/symbol.webp"
           alt="XYM"
-          width={48}
-          height={48}
+          width={32}
+          height={32}
           className="animate-pulse mr-5"
         />
         XYMBOL 残高確認アプリ

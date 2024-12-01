@@ -14,18 +14,16 @@ export const ThemeSwitch = () => {
   }
 
   return (
-    <div>
-      <select
-        value={theme}
-        onChange={(e) => setTheme(e.target.value)}
-        className={`border-2 ${
-          theme === "dark" ? "dark:border-white" : "border-black"
-        }`}
-      >
-        <option value="system">System</option>
-        <option value="dark">Dark</option>
-        <option value="light">Light</option>
-      </select>
-    </div>
+    <select
+      value={theme}
+      onChange={(e) => setTheme(e.target.value)}
+      className={`ml-5 border-2 ${
+        theme === "dark" ? "dark:border-white" : "border-black"
+      }`}
+    >
+      <option value="system">System</option>
+      <option value="dark">Dark</option>
+      <option value="light">Light</option>
+    </select>
   );
 };
