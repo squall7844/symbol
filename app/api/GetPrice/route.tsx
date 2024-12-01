@@ -18,27 +18,14 @@ export const GET = async () => {
     const price = response.data.data.last;
 
     // キャッシュ無効化ヘッダー付きでレスポンス
-    const nextResponse = NextResponse.json(
-      { price },
-      {
-        headers: {
-          "Cache-Control": "no-store",
-        },
-      }
-    );
+    const nextResponse = NextResponse.json({ price });
 
     return nextResponse;
   } catch (error) {
     console.error("Error fetching cryptocurrency price:", error);
 
-    return NextResponse.json(
-      { error: "仮想通貨の取得に失敗しました。" },
-      {
-        status: 500,
-        headers: {
-          "Cache-Control": "no-store",
-        },
-      }
-    );
+    return NextResponse.json({ error: "仮想通貨の取得に失敗しました。" });
   }
 };
+
+export const revalidate = 0;
