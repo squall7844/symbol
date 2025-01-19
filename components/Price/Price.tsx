@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import axios from "axios";
-import Chart from "@/components/Chart/ViewChart";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { ThemeSwitch } from "@/components/Theme/ThmeSwitch";
+import Image from "next/image";
+import axios from "axios";
+import ResponsiveChart from "@/components/Chart/ResponsiveChart";
+import Loding from "../Utility/Loding";
 
 interface DBData {
   amount: number;
@@ -31,37 +31,25 @@ const Price = () => {
   const profit = Math.round(assets - investment); //利益
   const result = profit > 0 ? "😊" : "😔";
 
-  const fetchPriceData = () => {
-    // 仮想通貨(XYM)の最新価格を取得
-    axios
-      .get("/api/GetPrice")
-      .then((response) => {
-        setPriceData(response.data.price);
-      })
-      .catch((error) => {
-        console.error("GetPriceのAPI取得に失敗しました。:", error);
-      });
+  const fetchPriceData = async () => {
+    try {
+      // 仮想通貨(XYM)の最新価格を取得
+      const priceResponse = await axios.get("/api/GetPrice");
+      setPriceData(priceResponse.data.price);
 
-    // 現在のモザイク数を取得
-    axios
-      .get("/api/GetCoins")
-      .then((response) => {
-        setXymCoins(response.data.xymAmount);
-        setJpyCoins(response.data.jpyAmount);
-      })
-      .catch((error) => {
-        console.error("GetXymのAPI取得に失敗しました。:", error);
-      });
+      // 現在のモザイク数を取得
+      const coinsResponse = await axios.get("/api/GetCoins");
+      setXymCoins(coinsResponse.data.xymAmount);
+      setJpyCoins(coinsResponse.data.jpyAmount);
 
-    // DB情報を取得
-    axios
-      .get("/api/GetDB")
-      .then((response) => {
-        setDbData(response.data);
-      })
-      .catch((error) => {
-        console.error("GetDBのAPI取得に失敗しました。:", error);
-      });
+      // DB情報を取得
+      const dbResponse = await axios.get("/api/GetDB");
+      setDbData(dbResponse.data);
+
+      //エラー処理
+    } catch (error) {
+      console.error("データ取得に失敗しました。:", error);
+    }
   };
   // データをリロード時に取得する
   useEffect(() => {
@@ -78,19 +66,7 @@ const Price = () => {
   ];
 
   return (
-    // <div className={theme === "dark" ? "neon-mode" : ""}>
     <div>
-      <div className="flex text-left text-3xl font-serif p-5">
-        <Image
-          src="/symbol.webp"
-          alt="XYM"
-          width={32}
-          height={32}
-          className="animate-pulse mr-5"
-        />
-        XYMBOL 残高確認アプリ
-      </div>
-      <ThemeSwitch />
       {priceData ? (
         <div>
           <div
@@ -119,7 +95,8 @@ const Price = () => {
                   {item.title} : {item.value}
                 </motion.li>
               ))}
-              <button
+              <Loding
+                loading={loading}
                 onClick={() => {
                   setLoading(true);
                   fetchPriceData();
@@ -127,31 +104,14 @@ const Price = () => {
                     setLoading(false);
                   }, 1000);
                 }}
-              >
-                {loading ? (
-                  <Image
-                    src="/loading.svg"
-                    alt="loading..."
-                    width={64}
-                    height={64}
-                  />
-                ) : (
-                  <Image
-                    src="/reload.svg"
-                    alt="reload..."
-                    width={64}
-                    height={64}
-                  />
-                )}
-              </button>
+              />
             </ul>
-
             <div
               className={`hidden lg:block w-6/12 p-4 m-5 ${
                 theme === "dark" ? "neon-border-blue" : "light-border"
               }`}
             >
-              <Chart />
+              <ResponsiveChart />
             </div>
           </div>
         </div>

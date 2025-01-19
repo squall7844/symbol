@@ -23,7 +23,6 @@ export const GET = async () => {
         "ACCESS-KEY": API_KEY,
         "ACCESS-NONCE": nonce,
         "ACCESS-SIGNATURE": signature,
-        "Cache-Control": "no-cache",
       },
     });
 
