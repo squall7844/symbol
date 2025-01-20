@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import axios from "axios";
 import ResponsiveChart from "@/components/Chart/ResponsiveChart";
-import Loding from "../Utility/Loding";
+import Loding from "@/components/Utility/Loding";
 
 interface DBData {
   amount: number;
@@ -16,21 +16,11 @@ interface DBData {
 
 const Price = () => {
   const { theme } = useTheme();
-  const [priceData, setPriceData] = useState(null);
+  const [priceData, setPriceData] = useState<number | null>(null);
   const [xymCoins, setXymCoins] = useState<number | null>(null);
   const [jpyCoins, setJpyCoins] = useState<number | null>(null);
   const [DbData, setDbData] = useState<DBData | null>(null);
   const [loading, setLoading] = useState(false);
-
-  // 定数を定義
-  const investment = DbData ? DbData.amount : 0;
-  const xymPrice = Number(priceData); //XYMの金額
-  const xymAmount = Math.round(Number(xymCoins)); //XYMの保有量
-  const jpyAmount = Math.round(Number(jpyCoins)); //JPYの保有量
-  const assets = Math.round(xymPrice * xymAmount) + jpyAmount; //資産金額
-  const profit = Math.round(assets - investment); //利益
-  const result = profit > 0 ? "😊" : "😔";
-
   const fetchPriceData = async () => {
     try {
       // 仮想通貨(XYM)の最新価格を取得
@@ -55,6 +45,15 @@ const Price = () => {
   useEffect(() => {
     fetchPriceData();
   }, []);
+
+  // 定数を定義
+  const investment = DbData ? DbData.amount : 0;
+  const xymPrice = Number(priceData); //XYMの金額
+  const xymAmount = Math.round(Number(xymCoins)); //XYMの保有量
+  const jpyAmount = Math.round(Number(jpyCoins)); //JPYの保有量
+  const assets = Math.round(xymPrice * xymAmount) + jpyAmount; //資産金額
+  const profit = Math.round(assets - investment); //利益
+  const result = profit > 0 ? "😊" : "😔";
 
   // map関数用配列
   const List = [
@@ -90,7 +89,7 @@ const Price = () => {
                   transition={{ duration: 0.5, delay: index * 0.5 }}
                   className={`border-b-2 text-3xl w-auto p-2 m-5 ${
                     theme === "dark" ? "border-white" : "border-black"
-                  }`}
+                  } `}
                 >
                   {item.title} : {item.value}
                 </motion.li>

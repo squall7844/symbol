@@ -19,7 +19,7 @@ export const ThemeSwitch = () => {
   }
 
   return (
-    <div className="flex justify-end ">
+    <div className="flex justify-end cursor-pointer">
       {theme === "light" ? (
         <div className="flex mr-6">
           <Image
