@@ -1,10 +1,21 @@
-const Login = () => {
+import SessionStatus from "@/components/Auth/Session";
+import { getProviders, signIn } from "next-auth/react";
+
+export default async function Login() {
+  const providers = await getProviders();
+
   return (
     <div>
-      <div>ログインページです</div>
-      <div>ログイン方法</div>
+      <h1>Login</h1>
+      <h1>Sign In</h1>
+      {providers &&
+        Object.values(providers).map((provider) => (
+          <div key={provider.name}>
+            <button onClick={() => signIn(provider.id)}>
+              Sign in with {provider.name}
+            </button>
+          </div>
+        ))}
     </div>
   );
-};
-
-export default Login;
+}
