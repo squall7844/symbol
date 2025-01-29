@@ -1,22 +1,17 @@
-import Header from "@/components/Header/Header";
-import { ThemeSwitch } from "@/components/Theme/ThmeSwitch";
-import Price from "@/components/Price/Price";
-import Response from "@/components/Responsive/Response";
 import Link from "next/link";
 
-export default function Home() {
+const TopPage = () => {
   return (
-    <div className="h-full">
-      <Response />
-      <Header />
-      <ThemeSwitch />
-      <Price />
-      <Link className="text-center mb-14" href="/test">
-        testページ
-      </Link>
-      <Link className="text-center mb-14" href="/details">
-        設定ページ
+    <div className="text-center">
+      <div className="">
+        <div>Hellow World</div>
+        <div>TOP PAGE</div>
+      </div>
+      <Link className="border border-white" href="/login">
+        LOGIN
       </Link>
     </div>
   );
-}
+};
+
+export default TopPage;

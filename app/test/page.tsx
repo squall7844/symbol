@@ -1,5 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+
+import SignOut from "@/components/Auth/SignOut";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function TestPage() {
   const session = await getServerSession(authOptions);
@@ -20,6 +22,7 @@ export default async function TestPage() {
     <div>
       <h1>Test Page</h1>
       <p>Welcome, {session.user?.name}!</p>
+      <SignOut />
     </div>
   );
 }

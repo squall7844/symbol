@@ -24,16 +24,16 @@ const Price = () => {
   const fetchPriceData = async () => {
     try {
       // 仮想通貨(XYM)の最新価格を取得
-      const priceResponse = await axios.get("/api/GetPrice");
+      const priceResponse = await axios.get("/api/getPrice");
       setPriceData(priceResponse.data.price);
 
       // 現在のモザイク数を取得
-      const coinsResponse = await axios.get("/api/GetCoins");
+      const coinsResponse = await axios.get("/api/getCoins");
       setXymCoins(coinsResponse.data.xymAmount);
       setJpyCoins(coinsResponse.data.jpyAmount);
 
       // DB情報を取得
-      const dbResponse = await axios.get("/api/GetDB");
+      const dbResponse = await axios.get("/api/getDB");
       setDbData(dbResponse.data);
 
       //エラー処理

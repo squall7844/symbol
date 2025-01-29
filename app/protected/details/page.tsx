@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios"; // axiosをインポート
+import axios from "axios";
 
 interface UserData {
   id: number;
@@ -24,7 +24,7 @@ const UserUpdate: React.FC = () => {
     setMessage("");
 
     try {
-      const response = await axios.put("/api/GetDB", userData, {
+      const response = await axios.put("/api/getDB", userData, {
         headers: {
           "Content-Type": "application/json",
         },

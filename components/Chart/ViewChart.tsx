@@ -15,7 +15,7 @@ const ViewChart = () => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axios.get("/api/GetChart");
+        const response = await axios.get("/api/getChart");
         const allData = response.data.data.candlestick[0].ohlcv;
         const weekData = allData.slice(-7).map((item: any[]) => ({
           date: new Date(item[5]),
