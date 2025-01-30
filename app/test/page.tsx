@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 
 import SignOut from "@/components/Auth/SignOut";
-import { authOptions } from "@/components/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function TestPage() {
   const session = await getServerSession(authOptions);
