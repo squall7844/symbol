@@ -7,7 +7,7 @@ const TopPage = () => {
         <div>Hellow World</div>
         <div>TOP PAGE</div>
       </div>
-      <Link className="border border-white" href="/login">
+      <Link className="" href="/login">
         LOGIN
       </Link>
     </div>

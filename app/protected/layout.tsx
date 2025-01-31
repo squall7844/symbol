@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { ROUTES } from "@/components/Route/URL";
 
 export default async function ProtectedLayout({
   children,
@@ -9,9 +10,8 @@ export default async function ProtectedLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  // 未ログインなら /login にリダイレクト
   if (!session) {
-    redirect("/login");
+    redirect(ROUTES.LOGIN);
   }
-  return <>{children}</>;
+  return <div>{children}</div>;
 }

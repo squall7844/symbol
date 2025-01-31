@@ -1,7 +1,13 @@
+import { ROUTES } from "@/components/Route/URL";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+const prisma = new PrismaClient();
+
 export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -19,7 +25,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/login", // ログインページ
+    signIn: ROUTES.LOGIN,
   },
   session: {
     strategy: "jwt", // JWTでセッションを管理
@@ -28,7 +34,7 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async redirect({ url, baseUrl }) {
       // 認証成功後のリダイレクト先を指定
-      return url.startsWith(baseUrl) ? url : `${baseUrl}/test`;
+      return url.startsWith(baseUrl) ? url : `${baseUrl}`;
     },
   },
 };

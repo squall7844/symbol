@@ -1,6 +1,8 @@
 // app/constants.ts
 export const ROUTES = {
-  MAIN: "/protected/",
+  MAIN: "/protected",
   HOME: "/",
   LOGIN: "/login",
+  DETAILS: "protected/details",
+  TEST: "/test",
 };

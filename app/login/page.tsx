@@ -1,62 +1,80 @@
 "use client";
-
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { ROUTES } from "@/components/Route/URL";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter(); // ルーターを取得
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); // エラーをリセット
+    setError("");
 
     const result = await signIn("credentials", {
       username,
       password,
-      redirect: false, // 自動リダイレクトを無効化
+      redirect: false,
     });
 
     if (result?.error) {
-      setError("ログインに失敗しました。"); // 認証失敗
+      setError("ログインに失敗しました。");
     } else {
-      router.push("/protected"); // 認証成功時に /test へリダイレクト
+      router.push(ROUTES.MAIN);
     }
   };
+
+  const renderError = () => error && <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>ログイン</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {renderError()}
       <form
         onSubmit={handleSubmit}
         style={{ display: "inline-block", textAlign: "left" }}
       >
-        <div>
-          <label>ユーザー名:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>パスワード:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <InputField
+          label="ユーザー名:"
+          type="text"
+          value={username}
+          onChange={setUsername}
+        />
+        <InputField
+          label="パスワード:"
+          type="password"
+          value={password}
+          onChange={setPassword}
+        />
         <button type="submit">ログイン</button>
       </form>
     </div>
   );
 };
+
+const InputField = ({
+  label,
+  type,
+  value,
+  onChange,
+}: {
+  label: string;
+  type: string;
+  value: string;
+  onChange: (value: string) => void;
+}) => (
+  <div>
+    <label>{label}</label>
+    <input
+      type={type}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      required
+    />
+  </div>
+);
 
 export default Login;
