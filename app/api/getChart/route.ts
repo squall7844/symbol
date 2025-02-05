@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
+import { ROUTES } from "@/components/Utility/URL";
 import axios from "axios";
 
 const PAIR = process.env.BITBANK_PAIR || "";
-const URL = process.env.BITBANK_PUBLIC_URL || "";
+const URL = ROUTES.BITBANK.PUBLIC;
 const Year = new Date().getFullYear();
 
 // ビットバンクのAPIから1週間足のチャートデータを取得

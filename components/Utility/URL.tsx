@@ -5,4 +5,8 @@ export const ROUTES = {
   LOGIN: "/login",
   DETAILS: "protected/details",
   TEST: "/test",
+  BITBANK: {
+    API: "https://api.bitbank.cc",
+    PUBLIC: "https://public.bitbank.cc",
+  },
 };

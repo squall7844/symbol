@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
 import axios from "axios";
+import { NextResponse } from "next/server";
+import { ROUTES } from "@/components/Utility/URL";
 
 const PAIR = process.env.BITBANK_PAIR || "";
-const URL = process.env.BITBANK_PUBLIC_URL || "";
+const URL = ROUTES.BITBANK.PUBLIC;
 
 // ビットバンクAPIから通貨の金額を取得
 export const GET = async () => {

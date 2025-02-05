@@ -1,9 +1,10 @@
+import { ROUTES } from "@/components/Utility/URL";
 import axios from "axios";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 // ビットバンクAPIをenvから取得
-const API_URL = process.env.BITBANK_API_URL || "";
+const API_URL = ROUTES.BITBANK.API;
 const API_KEY = process.env.BITBANK_API_KEY || "";
 const API_SECRET = process.env.BITBANK_API_SECRET || "";
 
