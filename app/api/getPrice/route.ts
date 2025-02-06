@@ -28,5 +28,3 @@ export const GET = async () => {
     return NextResponse.json({ error: "仮想通貨の取得に失敗しました。" });
   }
 };
-
-export const revalidate = 0;
