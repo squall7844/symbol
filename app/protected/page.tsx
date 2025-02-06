@@ -1,12 +1,9 @@
-import Header from "@/components/Header/Header";
-import { ThemeSwitch } from "@/components/Theme/ThmeSwitch";
-import Price from "@/components/Price/Price";
 import Link from "next/link";
-import { ROUTES } from "@/components/Utility/URL";
-import Response from "@/components/Utility/Response";
+import Price from "@/components/Price/Price";
 import SignOut from "@/components/Session/SignOut";
+import { ROUTES } from "@/components/Utility/URL";
 
-const Home = () => {
+const Home = async () => {
   return (
     <div className="h-full">
       <Price />
