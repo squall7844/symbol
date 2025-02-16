@@ -11,7 +11,7 @@ export default {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, request) {
+      async authorize(credentials) {
         const user = { id: "1", name: "User" };
         if (
           credentials?.username === "admin" &&
