@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import axios from "axios";
 
 interface UserData {
@@ -12,7 +12,7 @@ interface UserData {
 const UserUpdate: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({ id: 1 });
   const [message, setMessage] = useState<string>("");
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

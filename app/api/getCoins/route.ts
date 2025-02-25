@@ -3,12 +3,12 @@ import axios from "axios";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 
-// ビットバンクAPIをenvから取得
+//ビットバンクAPIをenvから取得
 const API_URL = ROUTES.BITBANK.API;
 const API_KEY = process.env.BITBANK_API_KEY || "";
 const API_SECRET = process.env.BITBANK_API_SECRET || "";
 
-// 通貨の保有量を取得　ヘッダーをつけてAPI認証
+//通貨の保有量を取得 ヘッダーをつけてAPI認証
 export const GET = async () => {
   const path = "/v1/user/assets";
   const nonce = Date.now().toString();
@@ -27,7 +27,7 @@ export const GET = async () => {
       },
     });
 
-    // 取得したデータからXYMの保有量を抽出
+    //取得したデータからXYMの保有量を抽出
     const assets = response.data?.data?.assets;
     const xymAmount = assets?.find(
       (asset: { asset: string }) => asset.asset === "xym"
@@ -37,7 +37,7 @@ export const GET = async () => {
     )?.onhand_amount;
 
     return NextResponse.json({ xymAmount, jpyAmount });
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       error: "ビットバンクのAPI取得に失敗しました。",
     });

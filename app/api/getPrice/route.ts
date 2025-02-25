@@ -22,9 +22,7 @@ export const GET = async () => {
     const nextResponse = NextResponse.json({ price });
 
     return nextResponse;
-  } catch (error) {
-    console.error("Error fetching cryptocurrency price:", error);
-
+  } catch {
     return NextResponse.json({ error: "仮想通貨の取得に失敗しました。" });
   }
 };

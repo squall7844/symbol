@@ -17,14 +17,13 @@ if (process.env.NODE_ENV === "production") {
 const connectDB = async () => {
   try {
     await prisma.$connect();
-  } catch (err) {
-    console.error("DB接続に失敗しました。", err);
+  } catch {
     throw new Error("DB接続に失敗しました。");
   }
 };
 
 // GETでUSERテーブルの情報を取得
-export const GET = async (req: Request) => {
+export const GET = async () => {
   try {
     await connectDB();
     const user = await prisma.user.findUnique({
@@ -45,8 +44,7 @@ export const GET = async (req: Request) => {
     }
 
     return NextResponse.json(user);
-  } catch (err) {
-    console.error("DBの取得に失敗しました。", err);
+  } catch {
     return NextResponse.json(
       { error: "DBの取得に失敗しました。" },
       { status: 500 }
@@ -78,8 +76,7 @@ export const PUT = async (req: Request) => {
     });
 
     return NextResponse.json(updatedUser);
-  } catch (err) {
-    console.error("ユーザー情報の更新に失敗しました。", err);
+  } catch {
     return NextResponse.json(
       { error: "ユーザー情報の更新に失敗しました。" },
       { status: 500 }

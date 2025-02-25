@@ -14,7 +14,7 @@ export const GET = async () => {
     const nextResponse = NextResponse.json(response.data);
 
     return nextResponse;
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Chartの取得に失敗しました。" },
       { status: 500 }
